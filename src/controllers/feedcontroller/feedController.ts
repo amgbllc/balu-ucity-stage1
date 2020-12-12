@@ -2,34 +2,31 @@
 import { filterImageFromURL, deleteLocalFiles } from '../../util/util';
 
 const { endpoint, masterKey, port } = require('../../server-env');
-
-
-import { config } from '../../config/config';
-//import fs from 'fs';
-import aws = require('aws-sdk');
 import fs from 'fs';
+import aws = require('aws-sdk');
+
 import AWS from 'aws-sdk';
+const s3 = new AWS.S3();
 import { getAWSConfiguration } from '../../aws';
-import { env } from 'process';
+
 const axios = require('axios');
 const path = require('path');
 var multer = require('multer')
 var upload = multer({ dest: 'uploads/' })
 var multerS3 = require('multer-s3');
-const envVariable = require('dotenv').config({ path: process.env.PWD + '/.env' })
-const s3 = new AWS.S3();
+
 exports.postImage = function (req, res, next) {
 
-	const fileContent = fs.readFileSync('./src/image/butterfly-4.jpg');
+	const fileContent = fs.readFileSync('./src/butterfly-4.jpg');//dummy refrence for file content
 
-	fs.readdir('./src/image', (err, files) => {
+	fs.readdir('./src/uploadimage', (err, files) => {
 		files.forEach(file => {
 			console.log(file);
 
 			const postParams = {
 				Bucket: process.env.aws_media_bucket,
 				Key: file,
-				Body: fileContent
+				Body: fileContent //dummy refrence for file content
 			};
 
 			getAWSConfiguration();
@@ -55,7 +52,7 @@ exports.deleteImage = function (req, res) {
 
 	//const fileContent = fs.readFileSync('./src/image/butterfly-4.jpg');
 
-	fs.readdir('./src/image', (err, files) => {
+	fs.readdir('./src/uploadimage', (err, files) => {
 		files.forEach(file => {
 			console.log(file);
 
