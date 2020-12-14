@@ -22,7 +22,7 @@ exports.postImage = function (req, res, next) {
 	fs.readdir('./src/uploadimage', (err, files) => {
 		files.forEach(file => {
 			console.log(file);
-
+//valid??
 			const postParams = {
 				Bucket: process.env.aws_media_bucket,
 				Key: file,
